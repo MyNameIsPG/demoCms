@@ -1,0 +1,80 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+a {
+	text-decoration: none;
+}
+
+ul,
+ol {
+	list-style: none
+}
+
+html, body {
+	background: #f2f2f2;
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+.el-card__header {
+	padding: 15px 15px;
+	font-size: 15px;
+}
+
+.el-card__header span {
+  font-size: 13px;
+}
+
+.text-info {
+	color: #909399 !important;
+}
+.text-success {
+	color: #67C23A !important;
+}
+.text-warning {
+	color: #E6A23C !important;
+}
+.text-danger {
+	color: #F56C6C !important;
+}
+
+/*弹窗里面的表单*/
+.el-dialog .el-dialog__header {
+	padding: 20px;
+    border-bottom: 1px solid #eee;
+}
+.el-dialog .el-dialog__header .el-dialog__title {
+	font-size: 15px;
+	line-height: normal;
+}
+
+.el-dialog .el-dialog__footer {
+	padding: 20px;
+	border-top: 1px solid #eee;
+}
+.modelFromListBox .form-control {
+	width: 60%;
+}
+
+.modelFromListBox textarea {
+	height: 90px;
+	font-family: Arial
+}
+
+body .el-table th.gutter{
+  display: table-cell!important;
+}
+
+.tableNoData {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
