@@ -1,137 +1,79 @@
 <template>
   <div class="__goodsListAdd">
-    <el-card class="box-card">
-      <div slot="header" class="clearfix">
-        <span>新增用户</span>
-      </div>
-      <div class="addFromListBox">
-        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-          <el-form-item label="名称" prop="name" class="form-control">
-            <el-input v-model="ruleForm.name" placeholder="请输入名称"></el-input>
-          </el-form-item>
-          <el-form-item label="描述" class="form-control">
-            <el-input type="textarea" v-model="ruleForm.description" placeholder="写点什么吧！"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-          </el-form-item>
-        </el-form>
-      </div>
-    </el-card>
+    <div class="modelFromListBox">
+      <el-tree
+        :data="roleDataList"
+        show-checkbox
+        ref="tree"
+        node-key="uuid"
+        default-expand-all
+        :props="defaultProps">
+      </el-tree>
+    </div>
+    <div slot="footer" class="dialog-footer">
+      <el-button type="primary" @click="submitRole()">确 定</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-  import { roleAdd } from "src/api/role/index";//新增
-  import { roleUpdate } from "src/api/role/index";//修改
-  import { roleQueryOne } from "src/api/role/index";//查询单个
+  import { menuQueryList } from "src/api/role/index";//新增
+  import { roleMenuAdd } from "src/api/role/index";//新增
   export default {
     data() {
       return {
-        roleIdDataList: {},
-        ruleForm: {
-          name: "",
-          description: '',
+        checkedCities: ["a6199021d699434badfaf6eb1336c615", "ffc30ed2912548148c968eacabc97639"],
+        roleDataList: {},//查询所有的菜单集合
+        defaultProps: {
+          children: 'childs',
+          label: 'name'
         },
-        rules: {
-          name: [
-            { required: true, message: "请输入名称", trigger: "blur" },
-          ],
-        }
       };
     },
     mounted(){
-      if(this.$route.query.type==2){
-        this.taskQueryOnePost();
-      }
+      this.queryAllPost();
+      this.addQueryList();
     },
     methods: {
-      //查询单个
-      taskQueryOnePost(){
-        roleQueryOne({uuid: this.$route.query.uuid}).then(data => {
+      //查询所有的菜单
+      queryAllPost(){
+        menuQueryList({}).then(data => {
           if(data.data.code==200){
-            this.ruleForm.name = data.data.data.name;
-            this.ruleForm.description = data.data.data.description;
+            this.roleDataList = data.data.data
           }
         })
       },
-      submitForm(formName) {
-        this.$refs[formName].validate(valid => {
-          if (valid) {
-            if(this.$route.query.type==1){
-              let params = {
-                name: this.ruleForm.name,
-                description: this.ruleForm.description,
-              };
-              roleAdd(params).then(data => {
-                let _this = this;
-                if(data.data.code==200){
-                  this.$message({
-                    message: '新增成功！',
-                    type: 'success',
-                    duration: '500',
-                    onClose: function(){
-                      _this.$router.push({path: '/home/powerGroup'})
-                    }
-                  });
-                }
-              })
-            }else if(this.$route.query.type==2){
-              let params = {
-                uuid: this.$route.query.uuid,
-                description: this.ruleForm.description,
-                name: this.ruleForm.name,
-              };
-              roleUpdate(params).then(data => {
-                let _this = this;
-                if(data.data.code==200){
-                  this.$message({
-                    message: '修改成功！',
-                    type: 'success',
-                    duration: '500',
-                    onClose: function(){
-                      _this.$router.push({path: '/home/powerGroup'})
-                    }
-                  });
-                }
-              })
-            }
-          } else {
-            return false;
-          }
-        });
-      },
-      resetForm(formName) {
-        this.$refs[formName].resetFields();
-      },
-      getUEContent() {
-        let content = this.$refs.ue.getUEContent(); // 调用子组件方法
-        this.$notify({
-          title: '获取成功，可在控制台查看！',
-          message: content,
-          type: 'success'
-        });
-      },
-      getUEContentTxt() {
-        let content = this.$refs.ue.getUEContentTxt(); // 调用子组件方法
-        this.$notify({
-          title: '获取成功，可在控制台查看！',
-          message: content,
-          type: 'success'
-        });
-      },
-      //封面
-      handleAvatarSuccess(res, file) {
-        this.ruleForm.coverPic = res.data
-      },
-      // 上传图片前
-      beforeAvatarUpload(file) {
-        const isLt2M = file.size / 1024 / 1024 < 10;
-        if (!isLt2M) {
-          this.$message.error('上传头像图片大小不能超过 10MB!');
+      //确认
+      submitRole(){
+        console.log(this.$refs.tree.getCheckedNodes());
+        let menuList = this.$refs.tree.getCheckedKeys();
+        let arr = [];
+        for(let i=0;i<menuList.length;i++){
+          arr.push({ rId: this.$route.query.uuid, mId: menuList[i] })
         }
-        return isLt2M;
+        let params = {
+          menuList: arr
+        };
+        roleMenuAdd(params).then(data => {
+          debugger
+          let _this = this;
+          if(data.data.code==200){
+            this.$message({
+              message: '新增成功！',
+              type: 'success',
+              duration: '500',
+              onClose: function(){
+                //_this.$router.push({path: '/home/powerGroup'})
+              }
+            });
+          }
+        })
+
       },
+      //赋值
+      addQueryList(){
+        this.$refs.tree.setCheckedKeys(this.checkedCities)
+      }
     }
   };
 </script>

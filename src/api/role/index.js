@@ -29,3 +29,18 @@ export function roleQueryOne(params) {
     })
   })
 }
+export function menuQueryList(params) {
+  return new Promise((resolve, reject) => {
+    axiosToken.post(backen + 'menu/queryList', params).then(data => {
+      resolve(data)
+    })
+  })
+}
+
+export function roleMenuAdd(params) {
+  return new Promise((resolve, reject) => {
+    axiosToken.post(backen + 'roleMenu/add', params).then(data => {
+      resolve(data)
+    })
+  })
+}
