@@ -18,9 +18,6 @@
           <el-form-item label="手机号码" prop="phone" class="form-control">
             <el-input v-model="ruleForm.phone" placeholder="请输入手机号码"></el-input>
           </el-form-item>
-          <el-form-item label="密码" class="form-control">
-            <el-input type="password" v-model="ruleForm.password" placeholder="请输入密码"></el-input>
-          </el-form-item>
           <el-form-item label="邮箱" class="form-control">
             <el-input v-model="ruleForm.email" placeholder="请输入邮箱"></el-input>
           </el-form-item>
@@ -51,7 +48,6 @@
           name: "",
           sex: '',
           phone: '',
-          password: '',
           email: '',
           roleId: "",
           head_picture: ''
@@ -95,7 +91,6 @@
             this.ruleForm.name = data.data.data.name;
             this.ruleForm.sex = data.data.data.sex;
             this.ruleForm.phone = data.data.data.phone;
-            this.ruleForm.password = data.data.data.password;
             this.ruleForm.email = data.data.data.email;
             this.ruleForm.roleId = ''+data.data.data.roleId+''
           }
@@ -109,7 +104,6 @@
                 name: this.ruleForm.name,
                 sex: this.ruleForm.sex,
                 phone: this.ruleForm.phone,
-                password: this.ruleForm.password,
                 email: this.ruleForm.email,
                 roleId: this.ruleForm.roleId,
               };
@@ -132,7 +126,6 @@
                 name: this.ruleForm.name,
                 sex: this.ruleForm.sex,
                 phone: this.ruleForm.phone,
-                password: this.ruleForm.password,
                 email: this.ruleForm.email,
                 roleId: this.ruleForm.roleId,
               };

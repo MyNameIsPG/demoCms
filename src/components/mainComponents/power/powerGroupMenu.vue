@@ -19,10 +19,11 @@
 <script>
   import { menuQueryList } from "src/api/role/index";//新增
   import { roleMenuAdd } from "src/api/role/index";//新增
+  import { roleMenuQueryList } from "src/api/role/index";//新增
   export default {
     data() {
       return {
-        checkedCities: ["a6199021d699434badfaf6eb1336c615", "ffc30ed2912548148c968eacabc97639"],
+        checkedCities: [],
         roleDataList: {},//查询所有的菜单集合
         defaultProps: {
           children: 'childs',
@@ -52,27 +53,36 @@
           arr.push({ rId: this.$route.query.uuid, mId: menuList[i] })
         }
         let params = {
+          roleId: this.$route.query.uuid,
           menuList: arr
         };
         roleMenuAdd(params).then(data => {
-          debugger
           let _this = this;
           if(data.data.code==200){
             this.$message({
-              message: '新增成功！',
+              message: '设置成功！',
               type: 'success',
               duration: '500',
               onClose: function(){
-                //_this.$router.push({path: '/home/powerGroup'})
+                _this.$router.push({path: '/home/powerGroup'})
               }
             });
           }
         })
-
       },
       //赋值
       addQueryList(){
-        this.$refs.tree.setCheckedKeys(this.checkedCities)
+        roleMenuQueryList({"roleId": this.$route.query.uuid }).then(data => {
+          if(data.data.code==200){
+            if(data.data.data.length>0){
+              for(let i=0;i<data.data.data.length;i++){
+                this.checkedCities.push(data.data.data[i].menuId)
+              }
+              this.$refs.tree.setCheckedKeys(this.checkedCities)
+            }
+          }
+        })
+
       }
     }
   };

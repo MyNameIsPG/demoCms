@@ -44,3 +44,11 @@ export function roleMenuAdd(params) {
     })
   })
 }
+
+export function roleMenuQueryList(params) {
+  return new Promise((resolve, reject) => {
+    axiosToken.post(backen + 'roleMenu/queryList', params).then(data => {
+      resolve(data)
+    })
+  })
+}
