@@ -6,7 +6,7 @@
     <div class="sidebar">
       <div class="sidebar-scroll">
         <div class="logo">
-          <span>{{sysName}}</span>
+          <span>后台系统</span>
         </div>
         <div class="sidebar-nav-tree">
           <sidebarMenu></sidebarMenu>

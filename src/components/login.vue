@@ -24,8 +24,7 @@
 </template>
 
 <script>
-  import { getCookie, setCookie } from "@/util/cookie";
-  import { login } from "api/login/index";
+  import { login } from "src/api/login/index";
   export default {
     data() {
       var validateName = (rule, value, callback) => {
@@ -60,9 +59,8 @@
         this.$refs[formName].validate(valid => {
           if (valid) {
             let params = {
-              mobile: this.ruleForm2.name,
+              phone: this.ruleForm2.name,
               password: this.ruleForm2.pass,
-              loginType: '2',
             };
             login(params).then(response => {
               if (response.data.code == 200) {
@@ -78,7 +76,7 @@
                   sessionStorage.setItem("systemType", '2');
                   sessionStorage.setItem("communityId", response.data.data.communityId);
                   sessionStorage.setItem('access-token', response.data.data.token);
-                  this.$router.push({ path: '/home/sqSurvey' });
+                  this.$router.push({ path: '/home/user' });
                 }, 1000);
               }
             })

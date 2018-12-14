@@ -4,7 +4,6 @@ Vue.use(Router);
 
 import wrapper from 'src/components/wrapper';
 import login from 'src/components/login';
-import form from 'src/components/mainComponents/form';
 import user from 'src/components/mainComponents/power/user';
 import userAdd from 'src/components/mainComponents/power/userAdd';
 import powerGroup from 'src/components/mainComponents/power/powerGroup';
@@ -13,6 +12,7 @@ import powerGroupMenu from 'src/components/mainComponents/power/powerGroupMenu';
 
 const router = new Router({
   routes: [
+    {path: '/login', name: '登录', component: login},
     {
       path: '/home',
       name: '主页',
