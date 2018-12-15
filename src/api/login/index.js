@@ -23,9 +23,9 @@ export function signOut(params) {
 
 
 /*退出*/
-export function queryAll(params) {
+export function queryMenuAll(params) {
     return new Promise((resolve, reject) => {
-        axiosToken.post(backen + 'user/menus/queryAll', params).then(data => {
+        axiosToken.post(backen + 'menu/queryMenuAll', params).then(data => {
             resolve(data)
         })
     })

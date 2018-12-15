@@ -12,6 +12,7 @@ import powerGroupMenu from 'src/components/mainComponents/power/powerGroupMenu';
 
 const router = new Router({
   routes: [
+    {path: '', name: '登录', component: login},
     {path: '/login', name: '登录', component: login},
     {
       path: '/home',
